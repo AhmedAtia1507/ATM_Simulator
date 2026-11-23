@@ -43,6 +43,8 @@ public class Main {
         double userCurrentBalance = 2500.75;
         double userInputAmount = 0.0;
         int userMenuChoice = 0;
+        int validWithdrawals = 0;
+        int validDeposits = 0;
 
         do {
             System.out.println("========= ATM =========");
@@ -53,36 +55,50 @@ public class Main {
             System.out.println("5. Exit");
             System.out.println("=======================");
 
+            // If current balance is 0.0, display a warning message stating that the account is empty
+            if ( userCurrentBalance == 0.0 ) {
+                System.out.println( "Warning!! Your account is empty!!" );
+            }
+
             System.out.print("Please enter your choice: ");
             userMenuChoice = inputScanner.nextInt();
 
+            // Break from the while loop whenever the user chooses the exit menu choice
             if ( userMenuChoice == 5 ) {
                 System.out.println("Thank you for using our ATM");
                 break;
             }
 
             switch ( userMenuChoice ) {
-                case 1 -> {
+                case 1 -> { // Display current Balance
                     System.out.println( "Your current balance is $" + userCurrentBalance );
                 }
-                case 2 -> {
+                case 2 -> { // Deposit
                     System.out.print("Please enter the amount to deposit: ");
                     userInputAmount = inputScanner.nextDouble();
 
+                    // Input amount to be deposited must be positive value
                     if ( userInputAmount > 0.0 ) {
                         userCurrentBalance += userInputAmount;
+                        validDeposits++;
                         System.out.println("Amount added successfully!! New balance is $" + userCurrentBalance);
                     }
                     else {
                         System.out.println( "Invalid Amount!!" );
                     }
                 }
-                case 3 -> {
+                case 3 -> { // Withdrawal
                     System.out.print("Please enter the amount to withdraw: ");
                     userInputAmount = inputScanner.nextDouble();
 
-                    if ( ( userInputAmount > 0.0 ) && ( userInputAmount <= userCurrentBalance ) ) {
+                    // If user input was 0, we simulate canceled transaction
+                    // Withdrawal Amount must be positive and do not exceed the current balance
+                    if ( userInputAmount == 0 ) {
+                        System.out.println( "Transaction Canceled" );
+                    }
+                    else if ( ( userInputAmount > 0.0 ) && ( userInputAmount <= userCurrentBalance ) ) {
                         userCurrentBalance -= userInputAmount;
+                        validWithdrawals++;
                         System.out.println("Amount withdrawn successfully!! New balance is $" + userCurrentBalance);
                     }
                     else {
@@ -90,6 +106,9 @@ public class Main {
                     }
                 }
                 case 4 -> {
+                    // current balance >= 5000 ---> VIP
+                    // 1000 <= current balance < 5000 ---> Regular
+                    // current balance < 1000 --> low balance
                     if ( userCurrentBalance >= 5000 ) {
                         System.out.println( "You are a VIP customer!!" );
                     }
@@ -104,7 +123,10 @@ public class Main {
                     System.out.println( "Invalid Option!!" );
                 }
             }
-
         } while ( true );
+
+        // Display the number of valid transactions along the program
+        System.out.println("Number of successful deposits: " + validDeposits);
+        System.out.println("Number of successful withdrawals: " + validWithdrawals);
     }
 }
