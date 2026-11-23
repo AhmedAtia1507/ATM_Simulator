@@ -39,5 +39,72 @@ public class Main {
             System.out.println("You have used all your login attempts. Your Account has been blocked!!!");
             return;
         }
+
+        double userCurrentBalance = 2500.75;
+        double userInputAmount = 0.0;
+        int userMenuChoice = 0;
+
+        do {
+            System.out.println("========= ATM =========");
+            System.out.println("1. Check Balance");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Show Account Status");
+            System.out.println("5. Exit");
+            System.out.println("=======================");
+
+            System.out.print("Please enter your choice: ");
+            userMenuChoice = inputScanner.nextInt();
+
+            if ( userMenuChoice == 5 ) {
+                System.out.println("Thank you for using our ATM");
+                break;
+            }
+
+            switch ( userMenuChoice ) {
+                case 1 -> {
+                    System.out.println( "Your current balance is $" + userCurrentBalance );
+                }
+                case 2 -> {
+                    System.out.print("Please enter the amount to deposit: ");
+                    userInputAmount = inputScanner.nextDouble();
+
+                    if ( userInputAmount > 0.0 ) {
+                        userCurrentBalance += userInputAmount;
+                        System.out.println("Amount added successfully!! New balance is $" + userCurrentBalance);
+                    }
+                    else {
+                        System.out.println( "Invalid Amount!!" );
+                    }
+                }
+                case 3 -> {
+                    System.out.print("Please enter the amount to withdraw: ");
+                    userInputAmount = inputScanner.nextDouble();
+
+                    if ( ( userInputAmount > 0.0 ) && ( userInputAmount <= userCurrentBalance ) ) {
+                        userCurrentBalance -= userInputAmount;
+                        System.out.println("Amount withdrawn successfully!! New balance is $" + userCurrentBalance);
+                    }
+                    else {
+                        System.out.println( "Insufficient Amount!!" );
+                    }
+                }
+                case 4 -> {
+                    if ( userCurrentBalance >= 5000 ) {
+                        System.out.println( "You are a VIP customer!!" );
+                    }
+                    else if ( userCurrentBalance >= 1000 ) {
+                        System.out.println( "You are a Regular customer!!" );
+                    }
+                    else {
+                        System.out.println( "You have a low balance" );
+                    }
+                }
+                default -> {
+                    System.out.println( "Invalid Option!!" );
+                }
+            }
+
+        } while ( true );
     }
 }
