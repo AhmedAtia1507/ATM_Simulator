@@ -15,7 +15,7 @@ public class Main {
             // If the user input PIN is not a 4-digit number or not matching the correct PIN, an error message will be
             // printed and the user will be prompted to try again
             // Else, the system will output "Logged in successfully. Welcome User!!"
-            if ( ( inputPin < 0 ) || ( inputPin > 9999 ) ) {
+            if ( ( inputPin < 1000 ) || ( inputPin > 9999 ) ) {
                 System.out.println("Invalid input PIN: input PIN must be 4-digits positive value");
             }
             else if ( ( inputPin != correctPin ) ) {
@@ -37,6 +37,7 @@ public class Main {
         // and exit the program
         if ( availableLoginAttempts == 0 ) {
             System.out.println("You have used all your login attempts. Your Account has been blocked!!!");
+            inputScanner.close();
             return;
         }
 
@@ -128,5 +129,7 @@ public class Main {
         // Display the number of valid transactions along the program
         System.out.println("Number of successful deposits: " + validDeposits);
         System.out.println("Number of successful withdrawals: " + validWithdrawals);
+
+        inputScanner.close();
     }
 }
